@@ -93,3 +93,32 @@ brute force two pointer solution:
                     break
         return [idx1,idx2]
 ```
+
+---
+
+## XOR bitwise operation
+we can use the XOR operatior (^) to find the difference in two sets of strings/integers. but this tells us the difference in the set of char. for example `a = 1223 and b = 123` we want
+the `2` to be returned because thats the difference in the two sets of numbers. so
+```py
+def find_difference(str_1, str_2):
+
+    # we concat the strings into one set
+    c = str_1 + str_2
+
+    #store the bits
+    temp = 0
+    # itter through concated string and save the BIT version of the i'th to temp
+    # this will store bits and then revers the bit if it shows up again.
+    # this will only work if there are even sets of chars in the strings
+    # with only 1 odd char
+    for i in c:
+        # The ord() function returns an integer representing the Unicode character.
+        temp ^= ord(i)
+    return chr(temp)
+
+```
+this same operation can be used with ints but dont need to convert to int unicode.
+
+[XOR doc](https://python-reference.readthedocs.io/en/latest/docs/operators/bitwise_XOR.html)
+
+[ord doc](https://www.programiz.com/python-programming/methods/built-in/ord)
