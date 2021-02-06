@@ -93,7 +93,6 @@ brute force two pointer solution:
                     break
         return [idx1,idx2]
 ```
-
 ---
 
 ## XOR bitwise operation
