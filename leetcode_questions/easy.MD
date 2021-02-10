@@ -121,3 +121,79 @@ this same operation can be used with ints but dont need to convert to int unicod
 [XOR doc](https://python-reference.readthedocs.io/en/latest/docs/operators/bitwise_XOR.html)
 
 [ord doc](https://www.programiz.com/python-programming/methods/built-in/ord)
+
+---
+
+## add two numbers (linked list)
+
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+
+```python
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        # set up a dummy head for the temp new linked list.
+        # this will make it easer to call the "answer" value.
+        # setting to empty nodes.
+
+        # we need to use the carry variable to make the addititon of the linkeds
+        # becasue the nodes can only be single values for the answer
+        # ie [4]->[6]->[4]
+        #  + [4]->[5]->[6]
+        # -------------------
+        #    [9]->[2]->[1]
+
+        dummy = cur = ListNode(0)
+        carry = 0
+        # while at least one of these isnt "None" continue.
+        while l1 or l2 or carry:
+
+            # add the values to the carry, move to the next.
+            if l1:
+                carry += l1.val
+                l1 = l1.next
+            if l2:
+                carry += l2.val
+                l2 = l2.next
+
+            # mod the current value, so we can remove the "tens" place digit.
+            cur.next = ListNode(carry%10)
+
+            #move to the next node of the linkedlist
+            cur = cur.next
+
+            # floor the current value to get the tens place to carry to next value
+            carry //=10
+
+        # return the next node of the link that is a nested link with the
+        # link of the answer.
+        return dummy.next
+```
+
+we have to make sure that the next value in the linked list is as single digit and that we can carry the tens place value to the next
+node in the link. the only confusing part is the dummy head. but this allows us to call the .next to get the nested linked list?
+
+"Note that we use a dummy head to simplify the code. Without a dummy head, you would have to write extra conditional statements to initialize the head's value." via leetcode solution.
+
+```
+Complexity Analysis
+
+Time Complexity: O(max(m,n)+1)
+where m is the length of linked list l1, n is the length of linked list l2.
+The algorithm needs to iterate at most O(max(m,n)+1) times. "+1" comes from the carry.
+Space Complexity:O(max(m,n) + 1)
+where m is the length of linked list l1, n is the length of linked list l2.
+The algorithm needs to create a new list, and the length will be at most max(m,n)+1
+```
+
