@@ -197,3 +197,27 @@ where m is the length of linked list l1, n is the length of linked list l2.
 The algorithm needs to create a new list, and the length will be at most max(m,n)+1
 ```
 
+---
+
+## 7. Reverse Integer
+
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+```py
+class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+
+        answer = int(str(abs(x))[::-1]) if x > 0 else -1 * int(str(abs(x))[::-1])
+        if answer.bit_length() >= 32:
+            return 0
+        return answer
+```
+
+ pretty straight forward problem. the biggest issue i ran into was just trying to handle the zeros. i started by just making it a string then splicing off the firts element. but this didnt handle multiple zeros (ie 109000). but just reversing and turning into int removes all zeros before a hole number. using bit_length tells you how long a elements bit size is. so
+ 2**31 the largest number that can be calculated with 32 bits is "4294967295". so any number thats larger than that or has a longer bit length of 32 is invalid.
