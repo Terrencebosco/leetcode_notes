@@ -221,3 +221,47 @@ class Solution(object):
 
  pretty straight forward problem. the biggest issue i ran into was just trying to handle the zeros. i started by just making it a string then splicing off the firts element. but this didnt handle multiple zeros (ie 109000). but just reversing and turning into int removes all zeros before a hole number. using bit_length tells you how long a elements bit size is. so
  2**31 the largest number that can be calculated with 32 bits is "4294967295". so any number thats larger than that or has a longer bit length of 32 is invalid.
+
+---
+
+## Number of Steps to Reduce a Number to Zero
+
+Given a non-negative integer num, return the number of steps to reduce it to zero. If the current number is even, you have to divide it by 2, otherwise, you have to subtract 1 from it.
+
+```
+Input: num = 14
+Output: 6
+Explanation:
+Step 1) 14 is even; divide by 2 and obtain 7.
+Step 2) 7 is odd; subtract 1 and obtain 6.
+Step 3) 6 is even; divide by 2 and obtain 3.
+Step 4) 3 is odd; subtract 1 and obtain 2.
+Step 5) 2 is even; divide by 2 and obtain 1.
+Step 6) 1 is odd; subtract 1 and obtain 0.
+```
+
+pretty simple solution, just keep a count of the number of time that a math operation was taken place till num = 0.
+
+```py
+class Solution(object):
+    def numberOfSteps (self, num):
+        """
+        :type num: int
+        :rtype: int
+        """
+        count = 0
+        while num > 0:
+            if num % 2 == 0:
+                num /= 2
+            else:
+                num -= 1
+            count += 1
+        return count
+```
+
+an interesting alternative solution to look into.
+
+```py
+binary = [int(b) for b in bin(num)[2:]]
+return sum(binary) + len(binary) - 1  # -1 because the head digit (last digit to be removed) is removed by -1 and not /2
+```
