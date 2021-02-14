@@ -265,3 +265,67 @@ an interesting alternative solution to look into.
 binary = [int(b) for b in bin(num)[2:]]
 return sum(binary) + len(binary) - 1  # -1 because the head digit (last digit to be removed) is removed by -1 and not /2
 ```
+
+---
+
+## Valid Anagram
+
+Given two strings s and t , write a function to determine if t is an anagram of s.
+
+pretty straight forward solution using dictonary to count the number of letters in  each of the two strings. then comparing the two dictionaries together.
+
+```py
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        count = {}
+        count2 = {}
+
+        for i in s:
+            if i in count:
+                count[i] += 1
+            else:
+                count[i]=1
+
+        for i in t:
+            if i in count2:
+                count2[i] += 1
+            else:
+                count2[i]=1
+
+        return count == count2
+```
+
+another way this could be implimented that will cut down on the memory usage is to use one dictonary. count the number of letters in the first string then count the numbers in the second but subtract from the total for that key. then itter the keys and make sure that there is only 0s for the values.
+
+```py
+class Solution(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+
+        h = {}
+
+        for ch in s:
+            if ch not in h:
+                h[ch] = 0
+            h[ch] += 1
+
+        for ch in t:
+            if ch not in h:
+                h[ch] = 0
+            h[ch] -= 1
+
+        for key in h.keys():
+            if h[key] != 0:
+                return False
+
+        return True
+```
