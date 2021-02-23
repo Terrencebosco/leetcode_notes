@@ -329,3 +329,43 @@ class Solution(object):
 
         return True
 ```
+
+## 206. Reverse Linked List
+
+
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+```py
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        prev = None
+        current = head
+        while(current is not None):
+            next = current.next
+            current.next = prev
+            prev = current
+            current = next
+        head = prev
+
+        return prev
+```
+
+for this solution we are going to iterate over the linked list and transfer the
+values points to the revers order.
+
+we use two pointers, prev and current. while the current node isnt `Null` we continue.
+we set next to be the current.next node.
+then set the current.next to be prev
+then set current to next.
+
+[there is a good break down of this at geeksfoegeeks](https://www.geeksforgeeks.org/reverse-a-linked-list/)
