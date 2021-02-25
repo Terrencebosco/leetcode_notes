@@ -369,3 +369,42 @@ then set the current.next to be prev
 then set current to next.
 
 [there is a good break down of this at geeksfoegeeks](https://www.geeksforgeeks.org/reverse-a-linked-list/)
+
+---
+
+In an alien language, surprisingly they also use english lowercase letters, but possibly in a different order. The order of the alphabet is some permutation of lowercase letters.
+
+Given a sequence of words written in the alien language, and the order of the alphabet, return true if and only if the given words are sorted lexicographicaly in this alien language.
+
+```
+Input: words = ["hello","leetcode"], order = "hlabcdefgijkmnopqrstuvwxyz"
+Output: true
+Explanation: As 'h' comes before 'l' in this language, then the sequence is sorted.
+```
+
+this seemed easy when i first looked at it. i knew i needed to compare at least first letter of each letter in each word. we need to make sure that the current words first letter
+comes before the next words first letter. we can translate the word into a series of numbers by making a dictonary with the "order" then converting each letter to its corresponding index
+value. we can make two lists, one for the current and the previous. this will help if letters are the same and in the same postion itll move to the next letter and compare.
+we then check to see if the previous word is < the current word.
+
+```py
+class Solution:
+    def isAlienSorted(self, words, order):
+		# create a mapping (char -> position) for O(1) lookups.
+        char_to_idx = {c:i for i,c in enumerate(order)}
+
+        prev = []
+        for i in range(len(words)):
+			# Translate each character into its position in the alien alphabet.
+            word = [char_to_idx[char] for char in words[i]]
+
+			# Check if the current word translated is not less then the previous one.
+            if word < prev:
+                return False
+            prev = word
+
+        return True
+```
+
+`[0, 6, 1, 1, 14] < [1, 6, 6, 19, 4, 14, 5, 6]` returns `True` becasue it looks at the first letter then the operatior. if the first translated list value is `1` then itll move two index 1
+check,.. in this case they are the same, move to next index(2), and then returns `True` because 1 < 6.
