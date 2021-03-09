@@ -408,3 +408,41 @@ class Solution:
 
 `[0, 6, 1, 1, 14] < [1, 6, 6, 19, 4, 14, 5, 6]` returns `True` becasue it looks at the first letter then the operatior. if the first translated list value is `1` then itll move two index 1
 check,.. in this case they are the same, move to next index(2), and then returns `True` because 1 < 6.
+
+---
+
+## 53. Maximum Subarray
+
+Share
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+Approach 2: Greedy
+Intuition
+
+The problem to find maximum (or minimum) element (or sum) with a single array as the input is a good candidate to be solved by the greedy approach in linear time. One can find the examples of linear time greedy solutions in our articles of
+Super Washing Machines, and Gas Problem.
+
+Pick the locally optimal move at each step, and that will lead to the globally optimal solution.
+
+The algorithm is general and straightforward: iterate over the array and update at each step the standard set for such problems:
+
+current element
+
+current local maximum sum (at this given point)
+
+global maximum sum seen so far.
+
+```py
+class Solution:
+    def maxSubArray(self, nums: 'List[int]') -> 'int':
+        n = len(nums)
+        curr_sum = max_sum = nums[0]
+
+        for i in range(1, n):
+            curr_sum = max(nums[i], curr_sum + nums[i])
+            max_sum = max(max_sum, curr_sum)
+
+        return max_sum
+```
+
+this will return a list with each element being the max of that most array or that element in the original list.
