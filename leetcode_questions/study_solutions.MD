@@ -446,3 +446,81 @@ class Solution:
 ```
 
 this will return a list with each element being the max of that most array or that element in the original list.
+
+---
+
+## Swapping Nodes in a Linked List
+
+You are given the head of a linked list, and an integer k.
+
+Return the head of the linked list after swapping the values of the kth node from the beginning and the kth node from the end (the list is 1-indexed).
+
+cool problem, i solved this problem based on the hits give. i transformed the linked list to an array then reversed the elements.
+
+```py
+class Solution(object):
+    def swapNodes(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        # convert to array
+        linked_array = []
+        itr = head
+        while itr:
+            linked_array.append(itr.val)
+            itr = itr.next
+
+        if len(linked_array) == 1:
+            return head
+
+        # swap values
+        linked_array[k-1],linked_array[-k] = linked_array[-k], linked_array[k-1]
+
+        # test output
+        print(linked_array)
+
+        # rebuild
+        dummy = itr = ListNode(linked_array[0])
+        for i in range(1,len(linked_array)):
+            itr.next = ListNode(linked_array[i])
+            itr = itr.next
+        return dummy
+```
+
+this ended up being every slow and expensive.
+
+the alternative solution is keeping it as a linked list and swaping the vales based on a two pointer solution.
+
+```py
+class Solution(object):
+    def swapNodes(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        # set temp values to the head.
+        start, end = head, head
+
+        # iter the linked list until we move to the correct position for the
+        # first value
+        for _ in range(k-1):
+            end = end.next
+
+        first = end
+
+        # to find the second value we move the second pointer till the first
+        # pointer hits 'null'. this makes the second pointer lag behind the first one but land on the correct location when the first pointer.next is null.
+        while end.next:
+            start = start.next
+            end = end.next
+
+        last = start
+
+        # swap values
+        first.val, last.val = last.val, first.val
+
+        return head
+```
