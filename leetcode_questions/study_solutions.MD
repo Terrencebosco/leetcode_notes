@@ -525,6 +525,8 @@ class Solution(object):
         return head
 ```
 
+---
+
 ## 8. String to Integer (atoi)
 
 Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer (similar to C/C++'s atoi function).
@@ -599,4 +601,46 @@ class Solution(object):
 
         # return answer.
         return read
+```
+
+---
+
+## 29. Divide Two Integers
+
+Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
+
+Return the quotient after dividing dividend by divisor.
+
+The integer division should truncate toward zero, which means losing its fractional part. For example, truncate(8.345) = 8 and truncate(-2.7335) = -2.
+
+Note: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−231, 231 − 1]. For this problem, assume that your function returns 231 − 1 when the division result overflows.
+
+```py
+class Solution:
+    def divide(self, dividend: int, divisor: int) -> int:
+        ## RC ##
+        ## APPROACH : GREEDY ##
+        ## LOGIC ##
+        ## 1. we start with divisor say 3, and increment count to 1
+        ## 2. next we make divisor to 6 (substracting it) and make count +2
+        ## 3. next we make divisor to 12 (substracting it) and make count +4 and so on..
+        ## if we come across dividend value to negative, then we make divisor 3 again and repeat
+
+        neg = ( (dividend < 0) != (divisor < 0) )
+        dividend = left = abs(dividend)
+        divisor  = div  = abs(divisor)
+        count = 1
+        ans = 0
+        while left >= divisor:
+            left -= div
+            ans  += count
+            count += count
+            div  += div
+            if left < div:
+                div = divisor           # revert current operation as it is not valid
+                count = 1               # revert current count as it is not valid
+        if neg:
+            return max(-ans, -2147483648)
+        else:
+            return min(ans, 2147483647)
 ```
